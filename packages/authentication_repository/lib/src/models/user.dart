@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 
 class User extends Equatable {
-  const User({required this.id, this.email, this.name, this.token});
+  const User({this.id, this.email, this.name, required this.token});
 
-  final String id;
+  final String? id;
   final String? email;
   final String? name;
-  final String? token;
+  final String token;
 
-  static const empty = User(id: '');
+  static const empty = User(token: '');
 
   /// Convenience getter to determine whether the current user is empty.
   bool get isEmpty => this == User.empty;

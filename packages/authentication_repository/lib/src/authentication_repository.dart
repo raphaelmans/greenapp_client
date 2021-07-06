@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:authentication_api/authentication_api.dart';
 import 'package:authentication_repository/src/models/models.dart';
 
@@ -12,18 +11,22 @@ class AuthenticationRepository {
       : _authenticationApi = authenticationApi ?? AuthenticationApi();
 
   final AuthenticationApi _authenticationApi;
-  final _controller = StreamController<AuthenticationStatus>();
+  final _authController = StreamController<AuthenticationStatus>();
+  final _userController = StreamController<User>();
   User _user = User.empty;
 
   Stream<AuthenticationStatus> get status async* {
     await Future<void>.delayed(const Duration(seconds: 1));
     yield AuthenticationStatus.unauthenticated;
-    yield* _controller.stream;
+    yield* _authController.stream;
   }
 
-  Future<User?> getUser() async {
-    await Future<void>.delayed(const Duration(milliseconds: 300));
-    if (_user.isNotEmpty) return _user;
+  User get getUser {
+    return _user.isNotEmpty ? _user : User.empty;
+  }
+
+  Stream<User> get user async* {
+    yield* _userController.stream;
   }
 
   Future<void> logInWithEmailAndPassword({
@@ -38,16 +41,19 @@ class AuthenticationRepository {
           email: userApi.user.email,
           token: userApi.token,
           name: userApi.user.name);
-      _controller.add(AuthenticationStatus.authenticated);
-    } on Exception {
+      _authController.add(AuthenticationStatus.authenticated);
+      _userController.add(getUser);
+    } catch (e) {
+      print(e);
       throw LogInWithEmailAndPasswordFailure();
     }
   }
 
   void logOut() {
     _user = User.empty;
-    _controller.add(AuthenticationStatus.unauthenticated);
+    _authController.add(AuthenticationStatus.unauthenticated);
+    _userController.add(User.empty);
   }
 
-  void dispose() => _controller.close();
+  void dispose() => _authController.close();
 }
