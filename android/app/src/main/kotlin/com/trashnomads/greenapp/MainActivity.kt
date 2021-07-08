@@ -1,4 +1,4 @@
-package com.example.greenapp
+package com.trashnomads.greenapp
 
 import io.flutter.embedding.android.FlutterActivity
 

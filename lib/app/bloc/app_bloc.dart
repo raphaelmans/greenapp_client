@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
+import 'package:very_good_analysis/very_good_analysis.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';
@@ -12,8 +12,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({required AuthenticationRepository authenticationRepository})
       : _authenticationRepository = authenticationRepository,
         super(
-          authenticationRepository.getUser.isNotEmpty
-              ? AppState.authenticated(authenticationRepository.getUser)
+          authenticationRepository.currentUser.isNotEmpty
+              ? AppState.authenticated(authenticationRepository.currentUser)
               : const AppState.unauthenticated(),
         ) {
     _userSubscription = _authenticationRepository.user.listen(_onUserChanged);
@@ -29,7 +29,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     if (event is AppUserChanged) {
       yield _mapUserChangedToState(event, state);
     } else if (event is AppLogoutRequested) {
-      _authenticationRepository.logOut();
+      unawaited(_authenticationRepository.logOut());
     }
   }
 

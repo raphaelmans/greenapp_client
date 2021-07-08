@@ -1,7 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
+import 'package:flutter/material.dart';
 import 'package:greenapp/login/login.dart';
+import 'package:greenapp/sign_up/sign_up.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:formz/formz.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -14,26 +18,49 @@ class LoginForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              const SnackBar(content: Text('Authentication Failure')),
+              const SnackBar(
+                content: Text('Authentication Failure'),
+              ),
             );
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 16.0),
-              _EmailInput(),
-              const SizedBox(height: 8.0),
-              _PasswordInput(),
-              const SizedBox(height: 8.0),
-              _LoginButton(),
-              const SizedBox(height: 8.0),
-            ],
+      child: Column(
+        children: [
+          Container(
+            width: double.infinity,
+            child: RichText(
+              text: TextSpan(
+                text: 'Hi,\n',
+                style: Theme.of(context).textTheme.headline5!.copyWith(
+                      color: Color(0xff37474F),
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                children: const <TextSpan>[
+                  TextSpan(text: 'Welcome!'),
+                ],
+              ),
+            ),
           ),
-        ),
+          const SizedBox(height: 24.0),
+          _EmailInput(),
+          const SizedBox(height: 8.0),
+          _PasswordInput(),
+          const SizedBox(height: 8.0),
+          Spacer(),
+          _LoginButton(),
+          // RadioListTile(
+          //     contentPadding: EdgeInsets.zero,
+          //     title: Text('Remember Me'),
+          //     toggleable: true,
+          //     value: 'Remember Me',
+          //     groupValue: 'qweqeq',
+          //     onChanged: (_) => null),
+          const SizedBox(height: 12.0),
+          _SignUpButton(),
+          const SizedBox(height: 16.0),
+          _GoogleLoginButton(),
+        ],
       ),
     );
   }
@@ -50,7 +77,7 @@ class _EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
+            labelText: 'Enter Email Address',
             helperText: '',
             errorText: state.email.invalid ? 'invalid email' : null,
           ),
@@ -72,7 +99,7 @@ class _PasswordInput extends StatelessWidget {
               context.read<LoginCubit>().passwordChanged(password),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'password',
+            labelText: 'Enter Password',
             helperText: '',
             errorText: state.password.invalid ? 'invalid password' : null,
           ),
@@ -90,20 +117,53 @@ class _LoginButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : ElevatedButton(
+            : TextButton(
                 key: const Key('loginForm_continue_raisedButton'),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  primary: const Color(0xFFFFD600),
-                ),
                 onPressed: state.status.isValidated
                     ? () => context.read<LoginCubit>().logInWithCredentials()
                     : null,
-                child: const Text('LOGIN'),
+                child: const Text('Sign In'),
               );
       },
     );
+  }
+}
+
+class _GoogleLoginButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      width: 40.0,
+      height: 40.0,
+      padding: EdgeInsets.zero,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black),
+        borderRadius: BorderRadius.circular(50),
+      ),
+      child: IconButton(
+        iconSize: 18.0,
+        key: const Key('loginForm_googleLogin_raisedButton'),
+        icon: const Icon(FontAwesomeIcons.google),
+        onPressed: () => context.read<LoginCubit>().logInWithGoogle(),
+      ),
+    );
+  }
+}
+
+class _SignUpButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text('Do not have an account? '),
+      GestureDetector(
+        key: const Key('loginForm_createAccount_flatButton'),
+        onTap: () => Navigator.of(context).push<void>(SignUpPage.route()),
+        child: Text('Sign Up',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+            )),
+      ),
+    ]);
   }
 }

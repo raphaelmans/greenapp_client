@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578908516481",
+    "project_id": "greenapp-b6505",
+    "storage_bucket": "greenapp-b6505.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578908516481:android:b27c750689a0be2192dd80",
+        "android_client_info": {
+          "package_name": "com.trashnomads.greenapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578908516481-irq94gusih23ctedm76mfkdqsutnhaar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZralyDHaBY3h5YF_V1VnBP1FZabbMdtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578908516481-irq94gusih23ctedm76mfkdqsutnhaar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
