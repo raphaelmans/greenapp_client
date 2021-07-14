@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/widgets/widgets.dart';
+import '../widgets/action_buttons.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -42,12 +43,15 @@ class HomeView extends StatelessWidget {
     return Align(
       alignment: const Alignment(0, -1 / 3),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const SizedBox(height: 4.0),
-          Text(user.email ?? '', style: textTheme.headline6),
-          const SizedBox(height: 4.0),
-          Text(user.name ?? '', style: textTheme.headline5),
+          getPageTextLabel('What do you want to recycle\ntoday?'),
+          // Text(user.email ?? '', style: textTheme.headline6),
+          // const SizedBox(height: 4.0),
+          // Text(user.name ?? '', style: textTheme.headline5),
+          Expanded(child: ActionButtons()),
         ],
       ),
     );

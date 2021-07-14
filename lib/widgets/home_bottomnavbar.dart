@@ -25,13 +25,21 @@ class HomeBottomNavBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           IconButton(
-            icon: SvgPicture.asset('assets/svgs/community.svg'),
-            onPressed: () {},
-          ),
-          IconButton(
             icon: SvgPicture.asset('assets/svgs/home.svg'),
             onPressed: () {
               context.read<NavCubit>().navigateTo(NavScreen.home);
+            },
+          ),
+          IconButton(
+            icon: SvgPicture.asset('assets/svgs/community.svg'),
+            onPressed: () {
+              context.read<NavCubit>().navigateTo(NavScreen.community);
+            },
+          ),
+          IconButton(
+            icon: SvgPicture.asset('assets/svgs/cart.svg'),
+            onPressed: () {
+              context.read<NavCubit>().navigateTo(NavScreen.shop);
             },
           ),
           IconButton(

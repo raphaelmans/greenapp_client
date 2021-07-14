@@ -4,3 +4,4 @@ export 'home_bg.dart';
 export 'home_appbar.dart';
 export 'home_bottomnavbar.dart';
 export 'app_card.dart';
+export 'page_textlabel.dart';

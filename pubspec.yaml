@@ -40,5 +40,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/profile/
+    - assets/community/
+    - assets/shop/
+    - assets/home/
     - assets/svgs/
     - assets/images/
