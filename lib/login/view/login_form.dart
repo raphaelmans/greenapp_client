@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:greenapp/app/app.dart';
+import 'package:greenapp/constants.dart';
 import 'package:greenapp/login/login.dart';
 import 'package:greenapp/sign_up/sign_up.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -31,11 +33,7 @@ class LoginForm extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 text: 'Hi,\n',
-                style: Theme.of(context).textTheme.headline5!.copyWith(
-                      color: Color(0xff37474F),
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: kIntroHeadingStyle(context),
                 children: const <TextSpan>[
                   TextSpan(text: 'Welcome!'),
                 ],

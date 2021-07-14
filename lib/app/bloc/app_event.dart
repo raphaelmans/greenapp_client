@@ -17,3 +17,12 @@ class AppUserChanged extends AppEvent {
   @override
   List<Object> get props => [user];
 }
+
+class AppChangeScreen extends AppEvent {
+  const AppChangeScreen(this.screen);
+
+  final NavScreen screen;
+
+  @override
+  List<Object> get props => [screen];
+}

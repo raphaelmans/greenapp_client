@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:greenapp/constants.dart';
 import 'package:greenapp/login/login.dart';
 import 'package:greenapp/sign_up/sign_up.dart';
 
@@ -7,12 +8,16 @@ class IntroPage extends StatelessWidget {
   const IntroPage({Key? key}) : super(key: key);
 
   static Page page() => const MaterialPage<void>(child: IntroPage());
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => const IntroPage());
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: const EdgeInsets.all(45.0),
+        padding: kBodyPadding,
         child: IntroView(),
       ),
     );

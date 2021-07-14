@@ -2,7 +2,8 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:greenapp/components/components.dart';
+import 'package:greenapp/constants.dart';
+import 'package:greenapp/widgets/widgets.dart';
 import 'package:greenapp/login/login.dart';
 
 class LoginPage extends StatelessWidget {
@@ -18,16 +19,17 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
-        leading: IconButton(
-          icon: SvgPicture.asset('assets/svgs/return.svg'),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          title: IconButton(
+            icon: SvgPicture.asset(
+              'assets/svgs/return.svg',
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          )),
       body: DefaultBG(
         child: Padding(
-          padding: const EdgeInsets.all(45.0),
+          padding: kBodyPadding,
           child: BlocProvider(
             create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
             child: const LoginForm(),

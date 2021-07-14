@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:greenapp/constants.dart';
 import 'package:greenapp/sign_up/sign_up.dart';
 import 'package:formz/formz.dart';
 
@@ -20,20 +21,30 @@ class SignUpForm extends StatelessWidget {
             );
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -1 / 3),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _EmailInput(),
-            const SizedBox(height: 8.0),
-            _PasswordInput(),
-            const SizedBox(height: 8.0),
-            _ConfirmPasswordInput(),
-            const SizedBox(height: 8.0),
-            _SignUpButton(),
-          ],
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            child: RichText(
+              text: TextSpan(
+                text: 'Hi,\n',
+                style: kIntroHeadingStyle(context),
+                children: const <TextSpan>[
+                  TextSpan(text: 'Sign Up!'),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: 24.0),
+          _EmailInput(),
+          const SizedBox(height: 8.0),
+          _PasswordInput(),
+          const SizedBox(height: 8.0),
+          _ConfirmPasswordInput(),
+          const SizedBox(height: 8.0),
+          _SignUpButton(),
+        ],
       ),
     );
   }
@@ -50,7 +61,7 @@ class _EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<SignUpCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
+            labelText: 'Enter Email Address',
             helperText: '',
             errorText: state.email.invalid ? 'invalid email' : null,
           ),
@@ -72,7 +83,7 @@ class _PasswordInput extends StatelessWidget {
               context.read<SignUpCubit>().passwordChanged(password),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'password',
+            labelText: 'Enter Password',
             helperText: '',
             errorText: state.password.invalid ? 'invalid password' : null,
           ),
@@ -97,7 +108,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
               .confirmedPasswordChanged(confirmPassword),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'confirm password',
+            labelText: 'Confirm password',
             helperText: '',
             errorText: state.confirmedPassword.invalid
                 ? 'passwords do not match'
@@ -117,14 +128,8 @@ class _SignUpButton extends StatelessWidget {
       builder: (context, state) {
         return state.status.isSubmissionInProgress
             ? const CircularProgressIndicator()
-            : ElevatedButton(
+            : TextButton(
                 key: const Key('signUpForm_continue_raisedButton'),
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  primary: Colors.orangeAccent,
-                ),
                 onPressed: state.status.isValidated
                     ? () => context.read<SignUpCubit>().signUpFormSubmitted()
                     : null,
