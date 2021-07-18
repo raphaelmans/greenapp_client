@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:greenapp/app/app.dart';
-import 'package:greenapp/community/communit.dart';
+import 'package:greenapp/community/community.dart';
 import 'package:greenapp/home/home.dart';
 import 'package:greenapp/intro/intro.dart';
 import 'package:greenapp/login/login.dart';

@@ -4,14 +4,20 @@ class AppCard extends StatelessWidget {
   const AppCard({
     Key? key,
     required this.child,
+    this.onPressed,
+    this.height,
+    this.width,
   }) : super(key: key);
   final child;
+  final onPressed;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 150,
-      width: 150,
+      height: height ?? 150,
+      width: width ?? 150,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -28,7 +34,7 @@ class AppCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
-          onTap: () => null,
+          onTap: onPressed,
           child: child,
         ),
       ),

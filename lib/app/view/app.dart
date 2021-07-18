@@ -1,8 +1,11 @@
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:communities_repository/communities_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:greenapp/app/app.dart';
 import 'package:flow_builder/flow_builder.dart';
+import 'package:greenapp/community/bloc/bloc.dart';
+import 'package:greenapp/community/community.dart';
 import 'package:greenapp/navigation/navigation.dart';
 
 class App extends StatelessWidget {
@@ -23,7 +26,15 @@ class App extends StatelessWidget {
       value: _authenticationRepository,
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(
+            create: (_) => CommunitiesBloc(
+              communitiesRepository: FirebaseCommunitiesRepository(),
+            )..add(LoadCommunities()),
+          ),
           BlocProvider(create: (_) => _navCubit),
+          BlocProvider(create: (_) => CommunityCubit()),
+          BlocProvider(create: (_) => ProjectCubit()),
+          BlocProvider(create: (_) => MaterialCubit()),
           BlocProvider(
             create: (_) => AppBloc(
                 authenticationRepository: _authenticationRepository,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greenapp/constants.dart';
+import 'package:greenapp/shop/view/view.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import '../widgets/widgets.dart';
 
@@ -14,10 +15,10 @@ class ShopPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      appBar: HomeAppBar(
-        Text(
-          'Shop',
-          style: kIntroHeadingStyle(context),
+      appBar: ShopAppBar(
+        title: Text('Shop', style: kIntroHeadingStyle(context)),
+        onPressed: () => Navigator.of(context).push<void>(
+          CartPage.route(),
         ),
       ),
       body: const HomeBG(

@@ -21,7 +21,7 @@ class CommunityPage extends StatelessWidget {
           style: kIntroHeadingStyle(context),
         ),
       ),
-      body: const HomeBG(
+      body: HomeBG(
         child: CommunityView(),
       ),
       bottomNavigationBar: HomeBottomNavBar(),
@@ -38,7 +38,9 @@ class CommunityView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getPageTextLabel('What do you want to know\nToday?'),
-        Expanded(child: ActionButtons()),
+        Expanded(
+          child: ActionButtons(),
+        ),
       ],
     );
   }

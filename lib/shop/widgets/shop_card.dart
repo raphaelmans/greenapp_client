@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ShopCard extends StatelessWidget {
-  const ShopCard({Key? key, required this.child}) : super(key: key);
+  const ShopCard({Key? key, required this.child, this.onPressed})
+      : super(key: key);
+  final onPressed;
   final child;
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class ShopCard extends StatelessWidget {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16.0),
-          onTap: () => null,
+          onTap: onPressed,
           child: child,
         ),
       ),

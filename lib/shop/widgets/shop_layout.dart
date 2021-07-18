@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:greenapp/constants.dart';
+import 'package:greenapp/shop/view/product_detail_page.dart';
 import 'widgets.dart';
 
 class ShopLayout extends StatelessWidget {
@@ -22,6 +24,8 @@ class ShopLayout extends StatelessWidget {
         itemCount: mockData.length,
         itemBuilder: (context, index) {
           return ShopCard(
+            onPressed: () =>
+                Navigator.of(context).push<void>(ProductDetailPage.route()),
             child: Content(
               shopItem: mockData[index],
             ),
@@ -60,10 +64,7 @@ class Content extends StatelessWidget {
           ),
           Text(
             '\$${shopItem.itemPrice.toString()}',
-            style: TextStyle(
-              color: Color(0xff6AAD7D),
-              fontSize: 18.0,
-            ),
+            style: kPriceTextStyle,
           )
         ],
       ),
