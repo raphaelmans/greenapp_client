@@ -1,3 +1,4 @@
+import 'package:address_repository/address_repository.dart';
 import 'package:equatable/equatable.dart';
 
 /// {@template user}
@@ -7,11 +8,12 @@ import 'package:equatable/equatable.dart';
 /// {@endtemplate}
 class User extends Equatable {
   /// {@macro user}
-  const User({
-    required this.id,
-    this.email,
-    this.name,
-  });
+  const User(
+      {required this.id,
+      this.email,
+      this.name,
+      this.address,
+      this.isCommunityAdmin});
 
   /// The current user's email address.
   final String? email;
@@ -21,6 +23,10 @@ class User extends Equatable {
 
   /// The current user's name (display name).
   final String? name;
+
+  final bool? isCommunityAdmin;
+
+  final Address? address;
 
   /// Empty user which represents an unauthenticated user.
   static const empty = User(id: '');
@@ -37,4 +43,19 @@ class User extends Equatable {
         id,
         name,
       ];
+
+  User copyWith({
+    String? email,
+    String? name,
+    bool? isCommunityAdmin,
+    Address? address,
+  }) {
+    return User(
+      email: email ?? this.email,
+      id: id,
+      name: name ?? this.name,
+      isCommunityAdmin: isCommunityAdmin ?? this.isCommunityAdmin,
+      address: address ?? this.address,
+    );
+  }
 }

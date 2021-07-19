@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:greenapp/app/app.dart';
 import 'package:flow_builder/flow_builder.dart';
-import 'package:greenapp/app/bloc/user_bloc.dart';
 import 'package:greenapp/community/bloc/bloc.dart';
 import 'package:greenapp/community/community.dart';
 import 'package:greenapp/navigation/navigation.dart';
@@ -36,11 +35,6 @@ class App extends StatelessWidget {
           BlocProvider(create: (_) => CommunityCubit()),
           BlocProvider(create: (_) => ProjectCubit()),
           BlocProvider(create: (_) => MaterialCubit()),
-          BlocProvider(
-            create: (_) => UserBloc(
-              authenticationRepository: _authenticationRepository,
-            ),
-          ),
           BlocProvider(
             create: (_) => AppBloc(
                 authenticationRepository: _authenticationRepository,

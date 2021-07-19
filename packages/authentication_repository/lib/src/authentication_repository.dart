@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:address_repository/address_repository.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cache/cache.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -43,9 +44,31 @@ class AuthenticationRepository {
   /// the authentication state changes.
   ///
   /// Emits [User.empty] if the user is not authenticated.
-  Stream<User> get user {
-    return _firebaseAuth.authStateChanges().map((firebaseUser) {
+  Stream<User> get user async* {
+    yield* _firebaseAuth.authStateChanges().asyncMap((firebaseUser) async {
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
+
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+
+      if (user.isNotEmpty) {
+        DocumentSnapshot snap = await users.doc(user.id.toString()).get();
+        final Map<String, dynamic> snapData =
+            snap.data() as Map<String, dynamic>;
+        bool isAdmin = snapData['isCommunityAdmin'] ?? false;
+        String name = snapData['name'] ?? user.email;
+        Address? address = snapData['address'] != null
+            ? Address.fromEntity(
+                AddressEntity.fromSnapshot(await snapData['address'].get()))
+            : null;
+
+        _cache.write(
+            key: userCacheKey,
+            value: user.copyWith(
+                isCommunityAdmin: isAdmin, address: address, name: name));
+        return user.copyWith(
+            isCommunityAdmin: isAdmin, address: address, name: name);
+      }
       _cache.write(key: userCacheKey, value: user);
       return user;
     });

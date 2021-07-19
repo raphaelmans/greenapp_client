@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:greenapp/app/bloc/user_bloc.dart';
+import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/home/home.dart';
 import 'package:greenapp/widgets/home_bg.dart';
@@ -71,7 +71,7 @@ class ProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? name = context.read<UserBloc>().state.user.name;
+    final String? name = context.read<AppBloc>().state.user.name;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
