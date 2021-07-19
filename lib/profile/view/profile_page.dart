@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:greenapp/app/bloc/user_bloc.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/home/home.dart';
 import 'package:greenapp/widgets/home_bg.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/src/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -69,6 +71,7 @@ class ProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String? name = context.read<UserBloc>().state.user.name;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -89,20 +92,23 @@ class ProfileDetails extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'John',
-                style: textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.w900,
-                  color: Colors.black,
+              Container(
+                width: 150,
+                child: Text(
+                  name ?? 'error',
+                  style: textTheme.headline6!.copyWith(
+                    fontWeight: FontWeight.w900,
+                    color: Colors.black,
+                  ),
                 ),
               ),
-              Text(
-                'Doe',
-                style: textTheme.headline5!.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFF6E7191),
-                ),
-              ),
+              // Text(
+              //   'Doe',
+              //   style: textTheme.headline6!.copyWith(
+              //     fontWeight: FontWeight.w400,
+              //     color: Color(0xFF6E7191),
+              //   ),
+              // ),
               Text(
                 'Level 1',
                 style: textTheme.headline6!.copyWith(height: 1.5),

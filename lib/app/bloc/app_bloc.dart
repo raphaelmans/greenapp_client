@@ -29,7 +29,10 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   late final StreamSubscription<User> _userSubscription;
   late final StreamSubscription<NavScreen> _navScreenSubscription;
 
-  void _onUserChanged(User user) => add(AppUserChanged(user));
+  void _onUserChanged(User user) async {
+    add(AppUserChanged(user));
+  }
+
   void _onScreenChanged(NavScreen screen) => add(AppChangeScreen(screen));
 
   @override

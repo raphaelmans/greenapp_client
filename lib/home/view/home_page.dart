@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenapp/app/app.dart';
+import 'package:greenapp/app/bloc/user_bloc.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import '../widgets/action_buttons.dart';
@@ -48,6 +49,7 @@ class HomeView extends StatelessWidget {
         children: <Widget>[
           const SizedBox(height: 4.0),
           getPageTextLabel('What do you want to recycle\ntoday?'),
+          Text(context.read<UserBloc>().state.user.name ?? 'no name'),
           // Text(user.email ?? '', style: textTheme.headline6),
           // const SizedBox(height: 4.0),
           // Text(user.name ?? '', style: textTheme.headline5),
