@@ -16,9 +16,11 @@ class IntroPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: kBodyPadding,
-        child: IntroView(),
+      body: SafeArea(
+        child: Padding(
+          padding: kBodyPadding,
+          child: IntroView(),
+        ),
       ),
     );
   }

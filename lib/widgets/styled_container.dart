@@ -7,6 +7,7 @@ class StyledContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         border: Border.all(
           color: Color(0xffDBDBDB),

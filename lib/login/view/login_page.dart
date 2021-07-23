@@ -19,6 +19,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+          backgroundColor: Colors.transparent,
           elevation: 0,
           automaticallyImplyLeading: false,
           title: IconButton(

@@ -69,7 +69,11 @@ class AuthenticationRepository {
         return user.copyWith(
             isCommunityAdmin: isAdmin, address: address, name: name);
       }
-      _cache.write(key: userCacheKey, value: user);
+
+      _cache.write(
+        key: userCacheKey,
+        value: user.copyWith(isCommunityAdmin: false),
+      );
       return user;
     });
   }

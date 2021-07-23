@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:greenapp/community_admin/views/community_project_create.dart';
 import 'package:greenapp/community_admin/widgets/widgets.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/widgets/widgets.dart';
 
-class CommunityAdminPage extends StatelessWidget {
-  const CommunityAdminPage({Key? key}) : super(key: key);
+class CommunityAdminProjectPage extends StatelessWidget {
+  const CommunityAdminProjectPage({Key? key}) : super(key: key);
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => CommunityAdminPage());
+    return MaterialPageRoute<void>(builder: (_) => CommunityAdminProjectPage());
   }
 
   @override
@@ -14,11 +15,17 @@ class CommunityAdminPage extends StatelessWidget {
     return Scaffold(
       appBar: HomeAppBar(
         Text(
-          'Home',
+          'Projects',
           style: kIntroHeadingStyle(context),
         ),
       ),
       body: CommunityAdminView(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () =>
+            Navigator.of(context).push(CommunityProjectCreate.route()),
+        backgroundColor: Theme.of(context).primaryColor,
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
@@ -33,7 +40,7 @@ class CommunityAdminView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getPageTextLabel('What do you want to see today?'),
+          getPageTextLabel('What do you want to check today?'),
           SizedBox(
             height: 20,
           ),

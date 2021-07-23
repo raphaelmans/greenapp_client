@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 
 AppBar HomeAppBar(Widget title) {
   return AppBar(
+    automaticallyImplyLeading: false,
     elevation: 0.0,
     backgroundColor: Colors.transparent,
     title: title,

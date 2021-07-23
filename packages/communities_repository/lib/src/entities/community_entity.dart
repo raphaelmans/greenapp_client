@@ -19,18 +19,16 @@ class CommunityEntity extends Equatable {
     final Address address =
         Address.fromEntity(AddressEntity.fromSnapshot(snapLocation));
 
-    // final List<Project> projects =
-    //     await Future.wait(snapData['projects'].toList().map((elem) async {
-    //   final DocumentSnapshot snapProject = await elem.get();
-    //   return Project.fromEntity(await ProjectEntity.fromSnapshot(snapProject));
-    // }));
+    List snapList = snapData['projects'] ?? [];
+    List<Project> projects = [];
+    if (snapList.isNotEmpty) {
+      projects = await Future.wait(snapList.map((elem) async {
+        final DocumentSnapshot snapProject = await elem.get();
+        return Project.fromEntity(
+            await ProjectEntity.fromSnapshot(snapProject));
+      }));
+    }
 
-    List snapList = snapData['projects'];
-
-    final projects = await Future.wait(snapList.map((elem) async {
-      final DocumentSnapshot snapProject = await elem.get();
-      return Project.fromEntity(await ProjectEntity.fromSnapshot(snapProject));
-    }));
     return CommunityEntity(
         snapData['about'], address, snapData['name'], projects);
   }

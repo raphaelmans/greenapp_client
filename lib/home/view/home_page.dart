@@ -48,7 +48,6 @@ class HomeView extends StatelessWidget {
         children: <Widget>[
           const SizedBox(height: 4.0),
           getPageTextLabel('What do you want to recycle\ntoday?'),
-          Text(context.read<AppBloc>().state.user.name ?? 'no name'),
           // Text(user.email ?? '', style: textTheme.headline6),
           // const SizedBox(height: 4.0),
           // Text(user.name ?? '', style: textTheme.headline5),

@@ -18,6 +18,7 @@ class SignUpPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
           icon: SvgPicture.asset('assets/svgs/return.svg'),
