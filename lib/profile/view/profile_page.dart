@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -5,6 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/home/home.dart';
+import 'package:greenapp/profile/view/achievements.dart';
+import 'package:greenapp/profile/view/leaderboards.dart';
+import 'package:greenapp/profile/view/rewards_page.dart';
 import 'package:greenapp/widgets/home_bg.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -71,6 +75,15 @@ class ProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future<Map<String, dynamic>?> getUserDetails() async {
+      final docRef = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(context.read<AppBloc>().state.user.id)
+          .get();
+
+      return docRef.data();
+    }
+
     final String? name = context.read<AppBloc>().state.user.name;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,24 +115,35 @@ class ProfileDetails extends StatelessWidget {
                   ),
                 ),
               ),
-              // Text(
-              //   'Doe',
-              //   style: textTheme.headline6!.copyWith(
-              //     fontWeight: FontWeight.w400,
-              //     color: Color(0xFF6E7191),
-              //   ),
-              // ),
-              Text(
-                'Level 1',
-                style: textTheme.headline6!.copyWith(height: 1.5),
-              ),
-              SizedBox(height: 5.0),
-              LinearPercentIndicator(
-                padding: EdgeInsets.only(left: 8.0),
-                width: 150.0,
-                lineHeight: 14.0,
-                percent: 0.2,
-                progressColor: Color(0xFF40B861),
+              FutureBuilder(
+                future: getUserDetails(),
+                builder:
+                    (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+                  if (snapshot.hasData) {
+                    num exp = snapshot.data!['exp'];
+                    num level = (exp / 100) < 1 ? 1 : (exp / 100);
+                    num progress = (exp % 100) / 100;
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Level ${level.toInt()}',
+                          style: textTheme.headline6!.copyWith(height: 1.5),
+                        ),
+                        SizedBox(height: 5.0),
+                        LinearPercentIndicator(
+                          padding: EdgeInsets.only(left: 8.0),
+                          width: 150.0,
+                          lineHeight: 14.0,
+                          percent: progress.toDouble(),
+                          progressColor: Color(0xFF40B861),
+                        )
+                      ],
+                    );
+                  }
+                  return Text('...loading');
+                },
               )
             ],
           ),
@@ -153,22 +177,21 @@ class ActionButtons extends StatelessWidget {
             text: 'Achievements',
             icon: Image.asset('assets/profile/achievements.png'),
           ),
+          onPressed: () => Navigator.of(context).push(Achievements.route()),
         ),
         AppCard(
           child: AppCardContent(
-            text: 'Progress',
-            icon: SvgPicture.asset(
-              'assets/profile/progress.svg',
-            ),
+            text: 'Rewards',
+            icon: Image.asset('assets/profile/medal.png'),
           ),
+          onPressed: () => Navigator.of(context).push(RewardsPage.route()),
         ),
         AppCard(
           child: AppCardContent(
-            text: 'Progress',
-            icon: SvgPicture.asset(
-              'assets/profile/progress.svg',
-            ),
+            text: 'Leaderboards',
+            icon: SvgPicture.asset('assets/profile/progress.svg'),
           ),
+          onPressed: () => Navigator.of(context).push(Leaderboards.route()),
         ),
       ],
     );

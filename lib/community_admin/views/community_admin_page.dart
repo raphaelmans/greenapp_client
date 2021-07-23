@@ -19,6 +19,7 @@ class CommunityAdminPage extends StatelessWidget {
         ),
       ),
       body: CommunityAdminView(),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

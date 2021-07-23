@@ -107,7 +107,7 @@ class CartItem extends StatelessWidget {
                     width: 10,
                   ),
                   Text(
-                    '1',
+                    '2',
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w600,

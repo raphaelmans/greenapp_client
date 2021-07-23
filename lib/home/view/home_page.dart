@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
+import 'package:greenapp/information/view/view.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import '../widgets/action_buttons.dart';
 
@@ -18,7 +19,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       appBar: HomeAppBar(
         Text(
           'Home',
@@ -40,20 +40,61 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final user = context.select((AppBloc bloc) => bloc.state.user);
-    return Align(
-      alignment: const Alignment(0, -1 / 3),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const SizedBox(height: 4.0),
-          getPageTextLabel('What do you want to recycle\ntoday?'),
-          // Text(user.email ?? '', style: textTheme.headline6),
-          // const SizedBox(height: 4.0),
-          // Text(user.name ?? '', style: textTheme.headline5),
-          Expanded(child: ActionButtons()),
-        ],
-      ),
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        const SizedBox(height: 4.0),
+        getPageTextLabel('What do you want to recycle\ntoday?'),
+        SizedBox(
+          height: 5,
+        ),
+        SearchBar(),
+        SizedBox(
+          height: 20,
+        ),
+        Expanded(child: ActionButtons()),
+      ],
+    );
+  }
+}
+
+class SearchBar extends StatefulWidget {
+  const SearchBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<SearchBar> createState() => _SearchBarState();
+}
+
+class _SearchBarState extends State<SearchBar> {
+  String searchValue = '';
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search), hintText: 'Search'),
+            onChanged: (value) {
+              setState(() {
+                searchValue = value;
+              });
+            },
+            onSubmitted: (value) {
+              if (value == 'plastic') {
+                Navigator.of(context).push(InfromationDetailPage.route());
+              }
+            },
+          ),
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        Icon(FontAwesomeIcons.camera, color: Colors.black)
+      ],
     );
   }
 }

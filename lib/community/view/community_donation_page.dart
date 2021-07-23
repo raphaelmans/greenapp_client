@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:greenapp/app/bloc/app_bloc.dart';
 import 'package:greenapp/community/cubit/cubit.dart';
+import 'package:greenapp/community/view/confirmation_page.dart';
 import 'package:greenapp/community/widgets/widgets.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/widgets/widgets.dart';
@@ -127,7 +130,41 @@ class CommunityLocation extends StatelessWidget {
         Align(
           alignment: Alignment.center,
           child: TextButton(
-            onPressed: () => null,
+            onPressed: () async {
+              final user = context.read<AppBloc>().state.user;
+              final community =
+                  (context.read<CommunityCubit>().state as CommunitySelected)
+                      .community
+                      .name;
+              final commSnap = await FirebaseFirestore.instance
+                  .collection('communities')
+                  .where('name', isEqualTo: community)
+                  .get();
+
+              final commId = commSnap.docs.single.id;
+
+              final eventName =
+                  (context.read<ProjectCubit>().state as ProjectSelected)
+                      .project
+                      .name;
+
+              final materialName =
+                  (context.read<MaterialCubit>().state as MaterialSelected)
+                      .material
+                      .name;
+
+              final transactionCollection =
+                  FirebaseFirestore.instance.collection('transactions').add({
+                'userId': user.id,
+                'email': user.email,
+                'commId': commId,
+                'eventName': eventName,
+                'status': false,
+                'date': Timestamp.now(),
+                'materialName': materialName,
+              });
+              Navigator.of(context).pushReplacement(ConfirmationPage.route());
+            },
             child: Text('Drop-off'),
           ),
         )

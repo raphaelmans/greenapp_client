@@ -121,9 +121,11 @@ class _CommunityProjectCreateMaterialsState
                       .get();
 
                   final docs = materialSnapshots.docs;
+
                   final list = docs.map((e) {
                     return {...e.data(), 'ref': e.reference};
                   }).toList();
+
                   List wasteMaterials = [];
                   projectMaterials.map((materialElem) {
                     for (var element in list) {
@@ -132,6 +134,7 @@ class _CommunityProjectCreateMaterialsState
                       }
                     }
                   }).toList();
+
                   if (wasteMaterials.isNotEmpty) {
                     final project = {
                       'name': widget.projectName,
@@ -149,10 +152,24 @@ class _CommunityProjectCreateMaterialsState
                     final community =
                         await communityCollection.doc(communityId).get();
 
-                    await communityCollection.doc(communityId.toString()).set({
-                      ...?community.data(),
-                      'projects': [...?community['projects'], projectResult]
-                    });
+                    if (community.data()!.containsKey('projects')) {
+                      await communityCollection
+                          .doc(communityId.toString())
+                          .set({
+                        ...?community.data(),
+                        'projects': [
+                          ...community.data()!['projects'],
+                          projectResult
+                        ]
+                      });
+                    } else {
+                      await communityCollection
+                          .doc(communityId.toString())
+                          .set({
+                        ...?community.data(),
+                        'projects': [projectResult]
+                      });
+                    }
 
                     Navigator.of(context)
                         .pushReplacement(CommunityAdminRouter.route());

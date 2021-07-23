@@ -7,3 +7,4 @@ export 'app_card.dart';
 export 'page_textlabel.dart';
 export 'styled_container.dart';
 export 'ga_list_item.dart';
+export 'search_bar.dart';

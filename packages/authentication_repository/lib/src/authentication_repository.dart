@@ -98,6 +98,7 @@ class AuthenticationRepository {
       final usersCollection = FirebaseFirestore.instance.collection('users');
       usersCollection.doc(user.user!.uid).set({
         'isCommunityAdmin': false,
+        'exp': 0,
       });
     } on Exception {
       throw SignUpFailure();

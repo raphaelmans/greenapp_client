@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:greenapp/information/view/view.dart';
 import 'package:greenapp/widgets/widgets.dart';
 
 class ActionButtons extends StatelessWidget {
@@ -20,6 +21,8 @@ class ActionButtons extends StatelessWidget {
           children: [
             AppCard(
               child: Image.asset('assets/home/plastic.png'),
+              onPressed: () =>
+                  Navigator.of(context).push(InfromationDetailPage.route()),
             ),
             AppCard(
               child: Image.asset('assets/home/metal.png'),
@@ -29,9 +32,6 @@ class ActionButtons extends StatelessWidget {
             ),
             AppCard(
               child: Image.asset('assets/home/ewaste.png'),
-            ),
-            AppCard(
-              child: Image.asset('assets/home/organic.png'),
             ),
           ],
         ),

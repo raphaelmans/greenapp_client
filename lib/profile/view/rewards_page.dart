@@ -1,7 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:greenapp/constants.dart';
-import 'package:greenapp/shop/view/product_detail_page.dart';
-import 'widgets.dart';
+import 'package:greenapp/shop/widgets/widgets.dart';
+import 'package:greenapp/widgets/widgets.dart';
+
+class RewardsPage extends StatelessWidget {
+  const RewardsPage({Key? key}) : super(key: key);
+
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => const RewardsPage());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      extendBody: true,
+      appBar: HomeAppBar(
+        Text(
+          'Rewards',
+          style: kIntroHeadingStyle(context),
+        ),
+        implyLeading: true,
+      ),
+      body: ShopView(),
+      bottomNavigationBar: HomeBottomNavBar(),
+    );
+  }
+}
+
+class ShopView extends StatelessWidget {
+  const ShopView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: kBodyPadding.copyWith(top: 45),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: ShopLayout()),
+        ],
+      ),
+    );
+  }
+}
 
 class ShopLayout extends StatelessWidget {
   const ShopLayout({Key? key}) : super(key: key);
@@ -9,7 +50,7 @@ class ShopLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mockData = [
-      Shopitem(itemName: 'Bamboo Pen', itemPrice: 50.0),
+      Shopitem(itemName: 'Bamboo Pen', level: 5),
     ];
     return GridView.builder(
         scrollDirection: Axis.vertical,
@@ -23,8 +64,7 @@ class ShopLayout extends StatelessWidget {
         itemCount: mockData.length,
         itemBuilder: (context, index) {
           return ShopCard(
-            onPressed: () =>
-                Navigator.of(context).push<void>(ProductDetailPage.route()),
+            onPressed: () => null,
             child: Content(
               shopItem: mockData[index],
             ),
@@ -34,9 +74,9 @@ class ShopLayout extends StatelessWidget {
 }
 
 class Shopitem {
-  Shopitem({required this.itemName, required this.itemPrice});
+  Shopitem({required this.itemName, required this.level});
   final String itemName;
-  final double itemPrice;
+  final double level;
 }
 
 class Content extends StatelessWidget {
@@ -62,7 +102,7 @@ class Content extends StatelessWidget {
             shopItem.itemName,
           ),
           Text(
-            '\$${shopItem.itemPrice.toString()}',
+            'Level ${shopItem.level.toInt().toString()}',
             style: kPriceTextStyle,
           )
         ],

@@ -6,6 +6,7 @@ import 'package:provider/src/provider.dart';
 
 AppBar ShopAppBar({required Widget title, onPressed}) {
   return AppBar(
+    automaticallyImplyLeading: false,
     elevation: 0.0,
     backgroundColor: Colors.transparent,
     title: title,

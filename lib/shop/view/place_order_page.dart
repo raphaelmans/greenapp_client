@@ -5,6 +5,8 @@ import 'package:greenapp/constants.dart';
 import 'package:greenapp/shop/widgets/widgets.dart';
 import 'package:greenapp/widgets/widgets.dart';
 
+import '../shop.dart';
+
 class PlaceOrderPage extends StatelessWidget {
   const PlaceOrderPage({Key? key}) : super(key: key);
 
@@ -73,7 +75,8 @@ class PlaceOrderView extends StatelessWidget {
           ),
           TextButton(
             child: Text('Place Order'),
-            onPressed: () => null,
+            onPressed: () =>
+                Navigator.of(context).push(ConfirmationPage.route()),
           ),
           SizedBox(height: 10),
         ],

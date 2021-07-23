@@ -31,24 +31,27 @@ class ProjectLayout extends StatelessWidget {
               return Column(
                 children: [
                   ...snapshot.data!.map(
-                    (project) => AppCard(
-                      onPressed: () async {
-                        await context
-                            .read<ProjectCubit>()
-                            .selectProject(project);
-                        Navigator.of(context)
-                            .push(CommunityAdminProjectDetails.route());
-                      },
-                      width: double.infinity,
-                      child: CardContent(
-                        project: project,
+                    (project) => Padding(
+                      padding: EdgeInsets.only(bottom: 10.0),
+                      child: AppCard(
+                        onPressed: () async {
+                          await context
+                              .read<ProjectCubit>()
+                              .selectProject(project);
+                          Navigator.of(context)
+                              .push(CommunityAdminProjectDetails.route());
+                        },
+                        width: double.infinity,
+                        child: CardContent(
+                          project: project,
+                        ),
                       ),
                     ),
                   )
                 ],
               );
             }
-            return Text('test');
+            return Text('Failed to fetch data');
           }),
     );
   }
@@ -65,9 +68,12 @@ class CardContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Image.asset('assets/home/plastic.png'),
-        Text(
-          project.name,
-          style: kIntroHeadingStyle(context),
+        Flexible(
+          child: Text(
+            project.name,
+            style: kIntroHeadingStyle(context),
+            overflow: TextOverflow.fade,
+          ),
         ),
       ],
     );

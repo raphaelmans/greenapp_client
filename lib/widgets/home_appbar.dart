@@ -5,9 +5,9 @@ import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
 import 'package:provider/provider.dart';
 
-AppBar HomeAppBar(Widget title) {
+AppBar HomeAppBar(Widget title, {bool? implyLeading}) {
   return AppBar(
-    automaticallyImplyLeading: false,
+    automaticallyImplyLeading: implyLeading ?? false,
     elevation: 0.0,
     backgroundColor: Colors.transparent,
     title: title,

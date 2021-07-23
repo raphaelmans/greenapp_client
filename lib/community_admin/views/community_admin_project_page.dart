@@ -26,6 +26,7 @@ class CommunityAdminProjectPage extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon(Icons.add),
       ),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }

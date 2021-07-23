@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 class StyledContainer extends StatelessWidget {
-  const StyledContainer({Key? key, required this.child}) : super(key: key);
+  const StyledContainer({Key? key, required this.child, this.width})
+      : super(key: key);
 
   final Widget child;
+  final double? width;
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width: width ?? double.infinity,
       decoration: BoxDecoration(
         border: Border.all(
           color: Color(0xffDBDBDB),

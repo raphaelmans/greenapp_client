@@ -38,6 +38,7 @@ class ShopView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getPageTextLabel('What do you want to buy\ntoday?'),
+        SearchBar(),
         Expanded(child: ShopLayout()),
       ],
     );

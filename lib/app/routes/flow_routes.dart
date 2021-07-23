@@ -10,8 +10,8 @@ import 'package:greenapp/profile/profile.dart';
 import 'package:greenapp/shop/shop.dart';
 
 List<Page> onGenerateAppViewPages(AppState state, List<Page<dynamic>> pages) {
-  bool isAdmin = state.user.isCommunityAdmin ?? false;
-  final appPages = isAdmin
+  bool isAdmin = state.user.isCommunityAdmin == true;
+  List appPages = isAdmin == true
       ? [CommunityAdminRouter.page()]
       : [
           HomePage.page(),

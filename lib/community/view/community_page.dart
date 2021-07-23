@@ -38,6 +38,7 @@ class CommunityView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         getPageTextLabel('What do you want to know\nToday?'),
+        SearchBar(),
         Expanded(
           child: ActionButtons(),
         ),

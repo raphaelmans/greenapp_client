@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:greenapp/app/app.dart';
+import 'package:greenapp/community/widgets/widgets.dart';
 import 'package:greenapp/community_admin/community_admin.dart';
 import 'package:greenapp/community_admin/views/community_admin_project_page.dart';
+import 'package:greenapp/community_admin/views/community_transaction_page.dart';
 import 'package:provider/src/provider.dart';
 
 class CommunityAdminRouter extends StatefulWidget {
