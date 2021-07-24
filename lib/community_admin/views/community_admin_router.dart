@@ -47,7 +47,7 @@ class _CommunityAdminRouterState extends State<CommunityAdminRouter> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text('Please wait'),
             SizedBox(height: 10),
-            CircularProgressIndicator()
+            CircularProgressIndicator(color: Color(0xFF40B861))
           ]),
         ),
       ),

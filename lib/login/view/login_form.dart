@@ -114,7 +114,7 @@ class _LoginButton extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
+            ? const CircularProgressIndicator(color: Color(0xFF40B861))
             : TextButton(
                 key: const Key('loginForm_continue_raisedButton'),
                 onPressed: state.status.isValidated

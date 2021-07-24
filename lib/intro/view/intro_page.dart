@@ -43,7 +43,7 @@ class IntroView extends StatelessWidget {
             width: double.infinity,
             child: RichText(
               text: TextSpan(
-                text: 'Paste Your Waste\n',
+                text: 'Replace Your Waste\n',
                 style: Theme.of(context).textTheme.headline5!.copyWith(
                     fontWeight: FontWeight.bold, color: Color(0xff37474F)),
                 children: <TextSpan>[

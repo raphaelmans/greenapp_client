@@ -9,6 +9,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenapp/app/bloc/app_bloc.dart';
 import 'package:greenapp/app/models/models.dart';
 import 'package:greenapp/community_admin/community_admin.dart';
+import 'package:greenapp/community_admin/widgets/bottom_navbar.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import 'package:provider/src/provider.dart';
@@ -29,6 +30,7 @@ class CommunityTransactionPage extends StatelessWidget {
         ),
       ),
       body: CommunityTransactionView(),
+      bottomNavigationBar: BottomNavBar(),
     );
   }
 }
@@ -71,18 +73,26 @@ class _CommunityTransactionViewState extends State<CommunityTransactionView> {
           builder:
               (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return Center(
+                  child: CircularProgressIndicator(color: Color(0xFF40B861)));
             }
             if (snapshot.hasData) {
-              return Column(
-                children: [
-                  ...snapshot.data!.map((e) {
-                    return UserListItem(data: e);
-                  }),
-                ],
-              );
+              if (snapshot.data!.isNotEmpty) {
+                return Column(
+                  children: [
+                    ...snapshot.data!.map((e) {
+                      return UserListItem(data: e);
+                    }),
+                  ],
+                );
+              } else {
+                return GAListItem(
+                    onPressed: () => null,
+                    text: 'No transactions are made yet.');
+              }
             }
-            return Text('Failed to fetch data');
+            return GAListItem(
+                onPressed: () => null, text: 'Failed to fetch data.');
           },
         ));
   }

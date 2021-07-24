@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/information/view/view.dart';
+import 'package:greenapp/scan_ai/views/views.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import '../widgets/action_buttons.dart';
 
@@ -77,7 +78,9 @@ class _SearchBarState extends State<SearchBar> {
         Expanded(
           child: TextField(
             decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search), hintText: 'Search'),
+                focusColor: Theme.of(context).primaryColor,
+                prefixIcon: Icon(Icons.search, color: Colors.black),
+                hintText: 'Search'),
             onChanged: (value) {
               setState(() {
                 searchValue = value;
@@ -93,7 +96,10 @@ class _SearchBarState extends State<SearchBar> {
         SizedBox(
           width: 20,
         ),
-        Icon(FontAwesomeIcons.camera, color: Colors.black)
+        IconButton(
+            onPressed: () => Navigator.of(context).push(ScanAI.route()),
+            icon: Icon(FontAwesomeIcons.camera,
+                color: Theme.of(context).primaryColor))
       ],
     );
   }

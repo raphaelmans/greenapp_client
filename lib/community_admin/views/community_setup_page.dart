@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:greenapp/community_admin/widgets/widgets.dart';
 import 'package:greenapp/constants.dart';
+import 'package:greenapp/widgets/home_appbar.dart';
 
 class CommunitySetupPage extends StatelessWidget {
   const CommunitySetupPage({Key? key}) : super(key: key);
@@ -13,6 +14,9 @@ class CommunitySetupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: HomeAppBar(
+        Text(''),
+      ),
       body: CommunitySetupView(),
     );
   }
@@ -25,7 +29,7 @@ class CommunitySetupView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: kBodyPadding.copyWith(top: 45, bottom: 0),
+        padding: kBodyPadding.copyWith(bottom: 0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

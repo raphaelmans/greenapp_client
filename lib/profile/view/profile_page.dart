@@ -102,17 +102,26 @@ class ProfileDetails extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 150,
-                child: Text(
-                  name ?? 'error',
-                  style: textTheme.headline6!.copyWith(
-                    fontWeight: FontWeight.w900,
-                    color: Colors.black,
-                  ),
+              Text(
+                'Raphael',
+                style: textTheme.headline6!.copyWith(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black,
+                  overflow: TextOverflow.fade,
+                ),
+              ),
+              Text(
+                'Mansueto',
+                style: textTheme.headline6!.copyWith(
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.w900,
+                  color: Color(0xff6E7191),
+                  overflow: TextOverflow.fade,
                 ),
               ),
               FutureBuilder(
@@ -134,7 +143,7 @@ class ProfileDetails extends StatelessWidget {
                         SizedBox(height: 5.0),
                         LinearPercentIndicator(
                           padding: EdgeInsets.only(left: 8.0),
-                          width: 150.0,
+                          width: 140.0,
                           lineHeight: 14.0,
                           percent: progress.toDouble(),
                           progressColor: Color(0xFF40B861),

@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:provider/src/provider.dart';
 
 class Achievements extends StatelessWidget {
   const Achievements({Key? key}) : super(key: key);
@@ -40,26 +43,7 @@ class View extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CircularPercentIndicator(
-            radius: 120,
-            progressColor: Theme.of(context).primaryColor,
-            percent: 0.8,
-            center: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '1',
-                  style: kIntroHeadingStyle(context),
-                ),
-                Text('Level'),
-              ],
-            ),
-          ),
-          SizedBox(
-            height: 5,
-            width: double.infinity,
-          ),
-          Text('0/100 EXP'),
+          UserLevel(),
           SizedBox(
             height: 5,
           ),
@@ -76,6 +60,60 @@ class View extends StatelessWidget {
           BadgeContainer(),
         ],
       ),
+    );
+  }
+}
+
+class UserLevel extends StatelessWidget {
+  const UserLevel({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Future<Map<String, dynamic>?> getUserDetails() async {
+      final docRef = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(context.read<AppBloc>().state.user.id)
+          .get();
+
+      return docRef.data();
+    }
+
+    return FutureBuilder(
+      future: getUserDetails(),
+      builder: (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
+        if (snapshot.hasData) {
+          num exp = snapshot.data!['exp'];
+          num level = (exp / 100) < 1 ? 1 : (exp / 100);
+          num progress = (exp % 100) / 100;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircularPercentIndicator(
+                radius: 120,
+                progressColor: Theme.of(context).primaryColor,
+                percent: progress.toDouble(),
+                center: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      level.toInt().toString(),
+                      style: kIntroHeadingStyle(context),
+                    ),
+                    Text('Level'),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 5,
+                width: double.infinity,
+              ),
+              Text('0/100 EXP'),
+            ],
+          );
+        }
+        return Text('...loading');
+      },
     );
   }
 }

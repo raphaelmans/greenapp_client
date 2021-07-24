@@ -127,7 +127,7 @@ class _SignUpButton extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
+            ? const CircularProgressIndicator(color: Color(0xFF40B861))
             : TextButton(
                 key: const Key('signUpForm_continue_raisedButton'),
                 onPressed: state.status.isValidated

@@ -48,7 +48,7 @@ class CartView extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
                 children: [
-                  TextSpan(text: '\$50', style: kPriceTextStyle),
+                  TextSpan(text: '\$100', style: kPriceTextStyle),
                 ]),
           ),
           SizedBox(

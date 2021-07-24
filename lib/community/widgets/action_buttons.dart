@@ -25,15 +25,18 @@ class ActionButtons extends StatelessWidget {
                     await context.read<CommunityCubit>().selectCommunity(comm);
                     Navigator.of(context).push<void>(CommunityDetails.route());
                   },
-                  child: Content(
-                    community: comm,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Content(
+                      community: comm,
+                    ),
                   ),
                 ),
               ),
             ],
           );
         } else {
-          return Text('Failed to fetch communities');
+          return CircularProgressIndicator(color: Color(0xFF40B861));
         }
       },
     );
@@ -55,7 +58,7 @@ class Content extends StatelessWidget {
         Text(
           community.name,
           style: TextStyle(
-            fontSize: 24.0,
+            fontSize: 12.0,
             fontWeight: FontWeight.bold,
           ),
         ),

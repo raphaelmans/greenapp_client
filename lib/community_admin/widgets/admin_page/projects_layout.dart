@@ -27,6 +27,12 @@ class ProjectLayout extends StatelessWidget {
       child: FutureBuilder(
           future: getCommunityProjects(),
           builder: (context, AsyncSnapshot<List<Project>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                  child: CircularProgressIndicator(
+                color: Color(0xFF40B861),
+              ));
+            }
             if (snapshot.hasData) {
               return Column(
                 children: [
@@ -63,19 +69,25 @@ class CardContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Image.asset('assets/home/plastic.png'),
-        Flexible(
-          child: Text(
-            project.name,
-            style: kIntroHeadingStyle(context),
-            overflow: TextOverflow.fade,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Image.asset('assets/home/plastic.png'),
+          SizedBox(
+            width: 10,
           ),
-        ),
-      ],
+          Flexible(
+            child: Text(
+              project.name,
+              style: kIntroHeadingStyle(context),
+              overflow: TextOverflow.fade,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
