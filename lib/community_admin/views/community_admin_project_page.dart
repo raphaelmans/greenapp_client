@@ -41,7 +41,7 @@ class CommunityAdminView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          getPageTextLabel('What do you want to check today?'),
+          getPageTextLabel('What is happening today?'),
           SizedBox(
             height: 20,
           ),

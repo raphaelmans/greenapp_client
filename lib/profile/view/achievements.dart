@@ -108,7 +108,7 @@ class UserLevel extends StatelessWidget {
                 height: 5,
                 width: double.infinity,
               ),
-              Text('0/100 EXP'),
+              Text('${(progress * 100).toInt()}/100 EXP'),
             ],
           );
         }

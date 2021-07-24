@@ -48,7 +48,7 @@ class View extends StatelessWidget {
       UserGamer('Adrian Aguillar', 45, 99,
           imgSrc:
               'https://images.unsplash.com/photo-1503027534918-08897e434533?ixid=MnwxMjA3fDB8MHxzZWFyY2h8OTJ8fHVzZXIlMjBhbm9ueW1vdXN8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'),
-      UserGamer('Raphael Mansueto', 2, 0, imgSrc: imageLink),
+      UserGamer('Raphael Mansueto', 1, 50, imgSrc: imageLink),
     ];
     return SingleChildScrollView(
       child: Padding(

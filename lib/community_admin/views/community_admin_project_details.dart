@@ -126,10 +126,13 @@ class MaterialsList extends StatelessWidget {
             return Column(
               children: [
                 ...currState.project.materials.map(
-                  (material) => MaterialDonated(
-                    material: material,
-                    projectName: currState.project.name,
-                  ),
+                  (material) {
+                    print(material);
+                    return MaterialDonated(
+                      material: material,
+                      projectName: currState.project.name,
+                    );
+                  },
                 ),
               ],
             );

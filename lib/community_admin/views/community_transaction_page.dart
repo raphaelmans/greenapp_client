@@ -133,11 +133,11 @@ class _UserListItemState extends State<UserListItem> {
               children: [
                 Text(
                   widget.data['email'].toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12.0),
                 ),
                 Text(
                   widget.data['status'] == true ? 'Completed' : 'Pending',
-                  style: TextStyle(color: Color(0xffA0A0A0)),
+                  style: TextStyle(color: Color(0xffA0A0A0), fontSize: 12.0),
                 ),
               ],
             ),
@@ -198,7 +198,7 @@ class _UserListItemState extends State<UserListItem> {
                                 .textTheme
                                 .headline6!
                                 .copyWith(
-                                    fontSize: 16.0,
+                                    fontSize: 12.0,
                                     fontWeight: FontWeight.bold)),
                         SizedBox(
                           height: 10,

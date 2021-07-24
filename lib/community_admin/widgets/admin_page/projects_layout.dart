@@ -6,6 +6,7 @@ import 'package:greenapp/community/cubit/cubit.dart';
 import 'package:greenapp/community_admin/views/community_admin_project_details.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/widgets/app_card.dart';
+import 'package:greenapp/widgets/ga_list_item.dart';
 import 'package:provider/src/provider.dart';
 
 class ProjectLayout extends StatelessWidget {
@@ -57,7 +58,10 @@ class ProjectLayout extends StatelessWidget {
                 ],
               );
             }
-            return Text('Failed to fetch data');
+            return GAListItem(
+              onPressed: () => null,
+              text: 'No Projects created yet.',
+            );
           }),
     );
   }

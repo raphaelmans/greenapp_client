@@ -17,7 +17,7 @@ class CommunityPage extends StatelessWidget {
       extendBody: true,
       appBar: HomeAppBar(
         Text(
-          'Home',
+          'Community',
           style: kIntroHeadingStyle(context),
         ),
       ),

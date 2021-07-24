@@ -61,7 +61,7 @@ class Content extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'PET',
+          'Plastic beverage bottles',
           style: kDetailsHeadingStyle(context),
         ),
         SizedBox(
