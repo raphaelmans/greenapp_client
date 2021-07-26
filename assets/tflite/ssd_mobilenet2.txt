@@ -1,0 +1,5 @@
+0Cardboard
+1Glass
+2Metal
+3Paper
+4Plastic

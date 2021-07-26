@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/information/view/view.dart';
+import 'package:greenapp/scan_ai/views/detect_main.dart';
 import 'package:greenapp/scan_ai/views/views.dart';
 import 'package:greenapp/widgets/widgets.dart';
 import '../widgets/action_buttons.dart';
@@ -98,7 +99,7 @@ class _SearchBarState extends State<SearchBar> {
           width: 20,
         ),
         IconButton(
-            onPressed: () => Navigator.of(context).push(ScanAI.route()),
+            onPressed: () => Navigator.of(context).push(ScanAIReal.route()),
             icon: Icon(FontAwesomeIcons.camera,
                 color: Theme.of(context).primaryColor))
       ],
