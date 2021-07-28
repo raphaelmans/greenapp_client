@@ -105,6 +105,9 @@ class _DetectMainState extends State<DetectMain> {
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700)),
       );
     }
+
+    String materialDetected = _recognitions[0]['label'].toString();
+    print(materialDetected);
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Center(

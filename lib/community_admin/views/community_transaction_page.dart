@@ -161,7 +161,11 @@ class _UserListItemState extends State<UserListItem> {
           FirebaseFirestore.instance.collection('users').doc(data['userId']);
       final userData = (await userRef.get()).data();
 
-      userRef.set({...userData!, 'exp': userData['exp'] + 100});
+      userRef.set({
+        ...userData!,
+        'exp': userData['exp'] + 100,
+        'greenPoints': userData['greenPoints'] ?? 0 + 25
+      });
 
       Navigator.of(context).pushReplacement(DonationConfirmationPage.route());
     }

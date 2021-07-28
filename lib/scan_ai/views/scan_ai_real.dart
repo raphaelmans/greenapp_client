@@ -1,12 +1,16 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:greenapp/community/community.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/scan_ai/scan_ai.dart';
 import 'package:flutter/services.dart';
 import 'package:tflite/tflite.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import 'package:waste_material_repository/waste_material_repository.dart';
 
 class ScanAIReal extends StatelessWidget {
   const ScanAIReal({Key? key}) : super(key: key);
@@ -128,7 +132,8 @@ class _DetectMainState extends State<DetectMain> {
   File? _image;
   double? _imageWidth;
   double? _imageHeight;
-  var _recognitions;
+  var _recognitions = null;
+  String? _objectDetected;
   final ImagePicker _picker = ImagePicker();
 
   loadModel() async {
@@ -147,7 +152,7 @@ class _DetectMainState extends State<DetectMain> {
 
   // run prediction using TFLite on given image
   Future predict(File image) async {
-    var recognitions = await Tflite.runModelOnImage(
+    final recognitions = await Tflite.runModelOnImage(
         path: image.path, // required
         imageMean: 0.0, // defaults to 117.0
         imageStd: 255.0, // defaults to 1.0
@@ -156,16 +161,38 @@ class _DetectMainState extends State<DetectMain> {
         asynch: true // defaults to true
         );
 
-    if (recognitions != null &&
-        recognitions.toString().toLowerCase().contains('plastic')) {
-      Navigator.of(context).push(DisposeMe.route());
+    if (recognitions != null) {
+      String object =
+          Map<String, dynamic>.from(recognitions[0])['label'].split(' ')[1];
+
+      if (object == 'Plastic') {
+        object = 'Plastic Bottles';
+      }
+
+      setState(() {
+        _recognitions = recognitions;
+        _objectDetected = object;
+      });
+
+      final snapshot = await FirebaseFirestore.instance
+          .collection('materials')
+          .where('name', isEqualTo: object)
+          .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final name = snapshot.docs.single.data()['name'];
+        final about = snapshot.docs.single.data()['about'];
+        String? imageLink = snapshot.docs.single.data()['imageLink'];
+        String? disposal = snapshot.docs.single.data()['disposal'];
+
+        WasteMaterial material =
+            WasteMaterial(about, name, imageLink, disposal);
+
+        context.read<MaterialCubit>().selectMaterial(material);
+      }
     }
-    setState(() {
-      _recognitions = recognitions;
-    });
   }
 
-  // send image to predict method selected from gallery or camera
   sendImage(File image) async {
     if (image == null) return;
     await predict(image);
@@ -220,11 +247,16 @@ class _DetectMainState extends State<DetectMain> {
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700)),
       );
     }
+
+    String materialDetected = _recognitions[0]['label'].toString();
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Center(
         child: Text(
-          "Prediction: " + _recognitions[0]['label'].toString().toUpperCase(),
+          "Prediction: " +
+              (materialDetected.contains('Plastic')
+                  ? 'Plastic Bottle'
+                  : materialDetected),
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
         ),
       ),
@@ -254,11 +286,12 @@ class _DetectMainState extends State<DetectMain> {
       double ratioH = size.height / _imageHeight!;
 
       // final width and height after the ratio scaling is applied
-      finalW = _imageWidth! * ratioW * .85;
-      finalH = _imageHeight! * ratioH * .50;
+      finalW = _imageWidth! * ratioW * .65;
+      finalH = _imageHeight! * ratioH * .30;
     }
 
     return ListView(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
       children: <Widget>[
         Padding(
           padding: EdgeInsets.fromLTRB(0, 30, 0, 30),
@@ -274,6 +307,27 @@ class _DetectMainState extends State<DetectMain> {
                   child: Image.file(_image!,
                       fit: BoxFit.fill, width: finalW, height: finalH)),
         ),
+        _recognitions != null
+            ? TextButton(
+                onPressed: () => Navigator.of(context).push(DisposeMe.route()),
+                child: Text('Dispose me',
+                    style:
+                        TextStyle(fontWeight: FontWeight.w600, fontSize: 16.0)))
+            : SizedBox(),
+        _recognitions != null &&
+                _objectDetected != null &&
+                _objectDetected == 'Plastic Bottles'
+            ? TextButton(
+                onPressed: () => Navigator.of(context).push(RecycleIt.route()),
+                child: Text('Recycle me',
+                    style: TextStyle(
+                        color: Color(0xff40B861),
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16.0)),
+                style: TextButton.styleFrom(backgroundColor: Colors.white),
+              )
+            : SizedBox(),
+        Divider(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:greenapp/app/app.dart';
 import 'package:greenapp/constants.dart';
@@ -130,15 +131,37 @@ class ProfileDetails extends StatelessWidget {
                     (context, AsyncSnapshot<Map<String, dynamic>?> snapshot) {
                   if (snapshot.hasData) {
                     num exp = snapshot.data!['exp'];
+                    num? greenpoints = snapshot.data!['greenPoints'];
                     num level = (exp / 100) < 1 ? 1 : (exp / 100);
                     num progress = (exp % 100) / 100;
 
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        RichText(
+                          text: TextSpan(
+                            children: <TextSpan>[
+                              TextSpan(
+                                  text: 'Green Points: ',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  )),
+                              TextSpan(
+                                text: greenpoints != null
+                                    ? greenpoints.toInt().toString()
+                                    : '0',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    height: 1.5),
+                              )
+                            ],
+                          ),
+                        ),
                         Text(
                           'Level ${level.toInt()}',
-                          style: textTheme.headline6!.copyWith(height: 1.5),
+                          style: textTheme.headline6!
+                              .copyWith(height: 1.5, fontSize: 16.0),
                         ),
                         SizedBox(height: 5.0),
                         LinearPercentIndicator(

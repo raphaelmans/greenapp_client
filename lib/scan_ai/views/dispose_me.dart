@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:greenapp/community/community.dart';
 import 'package:greenapp/constants.dart';
 import 'package:greenapp/widgets/widgets.dart';
-
+import 'package:provider/provider.dart';
 import '../scan_ai.dart';
 
 class DisposeMe extends StatelessWidget {
@@ -33,16 +33,20 @@ class View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const imageLink =
-        'https://images.unsplash.com/photo-1536939459926-301728717817?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80https://images.unsplash.com/photo-1536939459926-301728717817?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80';
+    String? imageLink =
+        (context.read<MaterialCubit>().state as MaterialSelected)
+            .material
+            .imageLink;
 
+    print(imageLink);
     return SingleChildScrollView(
       child: Column(children: [
         SizedBox(
           height: MediaQuery.of(context).size.height * 0.25,
           width: double.infinity,
           child: Image.network(
-            imageLink,
+            imageLink ??
+                'https://images.unsplash.com/photo-1536939459926-301728717817?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
             fit: BoxFit.cover,
           ),
         ),
@@ -60,9 +64,11 @@ class Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final material =
+        (context.read<MaterialCubit>().state as MaterialSelected).material;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
-        'Plastic Bottle',
+        material.name,
         style: kDetailsHeadingStyle(context),
       ),
       SizedBox(
@@ -70,8 +76,7 @@ class Content extends StatelessWidget {
         width: double.infinity,
       ),
       StyledContainer(
-        child: Text(
-            'Plastic bottles are the most commonly-recycled household plastics. Plastic bottles require up to 700 years to dissolve. 80% of plastic bottles never get recycled and 24,000,000 liters of oil is needed to produce these billions of plastic bottles.'),
+        child: Text(material.about),
       ),
       SizedBox(
         height: 10,
@@ -95,8 +100,8 @@ class Content extends StatelessWidget {
       SizedBox(
         height: 10,
       ),
-      Text(
-          'Put the plastic bottle inside the non-biodegradble portion of your garbage bin.'),
+      Text(material.disposal ??
+          'Place the waste material in the proper garbage bin.'),
       SizedBox(
         height: 20,
       ),

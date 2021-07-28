@@ -50,7 +50,7 @@ class ShopLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mockData = [
-      Shopitem(itemName: 'Bamboo Pen', level: 5),
+      Shopitem(itemName: 'Bamboo Pen', greenPoints: 50),
     ];
     return GridView.builder(
         scrollDirection: Axis.vertical,
@@ -74,9 +74,9 @@ class ShopLayout extends StatelessWidget {
 }
 
 class Shopitem {
-  Shopitem({required this.itemName, required this.level});
+  Shopitem({required this.itemName, required this.greenPoints});
   final String itemName;
-  final double level;
+  final double greenPoints;
 }
 
 class Content extends StatelessWidget {
@@ -102,7 +102,7 @@ class Content extends StatelessWidget {
             shopItem.itemName,
           ),
           Text(
-            'Level ${shopItem.level.toInt().toString()}',
+            '${shopItem.greenPoints.toInt().toString()} GP',
             style: kPriceTextStyle,
           )
         ],

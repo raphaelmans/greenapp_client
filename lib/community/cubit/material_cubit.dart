@@ -10,4 +10,8 @@ class MaterialCubit extends Cubit<MaterialState> {
   selectMaterial(material) {
     emit(MaterialSelected(material));
   }
+
+  deselectMaterial() {
+    emit(MaterialInitial());
+  }
 }
